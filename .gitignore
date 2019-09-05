@@ -1,0 +1,5 @@
+.idea
+*.sw[pon]
+dist
+node_modules
+coverage
