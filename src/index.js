@@ -1,16 +1,22 @@
-import { getOptions} from 'loader-utils';
+import { getOptions, parseQuery} from 'loader-utils';
 import { Swig } from 'swig';
 import * as path from 'path';
 import fs from 'fs';
 import yaml from 'js-yaml'
 
 export default function mySwigLoader(swigTemplateSourceString) {
-    const options = getOptions(this) || {};
-
-    addParamsFromLangFile(this, options);
-
+    const options = _getOptions(this);
     return processTemplate(this, swigTemplateSourceString, options);
 
+}
+
+function _getOptions(plugin){
+    const options = getOptions(plugin) || {};
+    if(plugin.resourceQuery){
+        Object.assign(options, parseQuery(plugin.resourceQuery));
+    }
+    addParamsFromLangFile(plugin, options);
+    return options;
 }
 
 function addParamsFromLangFile(plugin, options){
