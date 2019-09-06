@@ -1,8 +1,12 @@
 {
-  "name": "my-swig-loader",
+  "name": "swig-loader",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "swig-loader",
+  "main": "dist/cjs.js",
+  "authors": [
+    "Ondřej Košarko <kosarko@ufal.mff.cuni.cz>"
+  ],
+  "repository": "kosarko/swig-loader",
   "scripts": {
     "start": "npm run build -- -w",
     "prebuild": "npm run clean",
@@ -11,13 +15,12 @@
     "prepare": "npm run build",
     "release": "standard-version",
     "security": "npm audit",
-    "test:only": "jest",
+    "test:only": "cross-env NODE_ENV=test jest",
     "test:watch": "cross-env NODE_ENV=test jest --watch",
     "test:coverage": "cross-env NODE_ENV=test jest --collectCoverageFrom=\"src/**/*.js\" --coverage",
     "test": "cross-env NODE_ENV=test npm run test:coverage"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "peerDependencies": {
     "webpack": "4.x"
   },

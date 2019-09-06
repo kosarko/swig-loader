@@ -26,8 +26,8 @@ function addParamsFromLangFile(plugin, options){
 }
 
 function processTemplate(plugin, swigTemplateSourceString, options){
+    plugin.addDependency(plugin.resourcePath);
     const swig = new Swig(options);
-    monkeyPatchSwigToAddDependency(swig, plugin);
     const result = swig.render(swigTemplateSourceString,{
         locals: options,
         filename: plugin.resourcePath
@@ -39,13 +39,4 @@ function processTemplate(plugin, swigTemplateSourceString, options){
         const json = JSON.stringify(result);
         return `export default ${json}`;
     }
-}
-
-function monkeyPatchSwigToAddDependency(swig, plugin){
-    const loader = swig.options.loader,
-        _load = loader.load;
-    loader.load = function (filepath) {
-        plugin.addDependency(filepath);
-        return _load.apply(loader, arguments)
-    };
 }
